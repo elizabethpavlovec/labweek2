@@ -1,6 +1,6 @@
 ---
 title: "Lab 01 - Plastic waste"
-author: "INSERT NAME HERE"
+author: "Group 5"
 date: "`r Sys.Date()`"
 output: html_document
 ---
@@ -19,21 +19,30 @@ plastic_waste <- read_csv("data/plastic-waste.csv")
 
 ### Exercise 1
 
-*Remove this text, and add your answer for Exercise 1 here.*
-
 ```{r plastic-waste-continent}
-# remove this comment and add the code for Exercise 1 here
+plastic_waste_filter <- plastic_waste %>%
+  filter(plastic_waste_per_cap < 3.5)
+
+plastic_waste %>%
+  ggplot (aes(x=plastic_waste_per_cap, fill = continent))+
+    geom_histogram(binwidth = 0.1)+
+    coord_cartesian(xlim=c(0,0.8))+
+    facet_wrap(continent ~ .)
 ```
 
 ### Exercise 2
 
 ```{r plastic-waste-density}
-# remove this comment and add the code for Exercise 2 here
+ggplot(data = plastic_waste, 
+       mapping = aes(x = plastic_waste_per_cap, 
+                     color = continent, 
+                     fill = continent)) +
+  geom_density(alpha = 0.3)
 ```
 
 ### Exercise 3
 
-*Remove this text, and add your answer for Exercise 3 here.*
+Because the fill is the question of aesthetics in sense of dividing the data by color and being a part of of the x and Y axes. On the other hand, alpha is the characteristics of all data and how the graph overall looks rather than programming the axes and the data. 
 
 ### Exercise 4
 
