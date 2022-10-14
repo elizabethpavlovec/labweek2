@@ -24,11 +24,12 @@ plastic_waste_filter <- plastic_waste %>%
   filter(plastic_waste_per_cap < 3.5)
 
 plastic_waste %>%
-  ggplot (aes(x=plastic_waste_per_cap, fill = continent))+
+  ggplot (aes(x=plastic_waste_per_cap, color = continent, fill = continent))+
     geom_histogram(binwidth = 0.1)+
     coord_cartesian(xlim=c(0,0.8))+
     facet_wrap(continent ~ .)
 ```
+_From looking at the graph, North America has the most plastic waste per cap, ranking first. The continent with the least plastic waste per cap would be Africa._
 
 ### Exercise 2
 
@@ -41,54 +42,74 @@ ggplot(data = plastic_waste,
 ```
 
 ### Exercise 3
-
-Because the fill is the question of aesthetics in sense of dividing the data by color and being a part of of the x and Y axes. On the other hand, alpha is the characteristics of all data and how the graph overall looks rather than programming the axes and the data. 
+_The color and fill separates the data by color coding the data, while alpha changes the transparency of the data to help visualize the difference between the data._
 
 ### Exercise 4
 
-*Remove this text, and add your answer for Exercise 4 here.*
-
 ```{r plastic-waste-violin}
-# remove this comment and add the code for Exercise 4 here
+ggplot(data = plastic_waste, 
+       mapping = aes(x = continent, 
+                     y = plastic_waste_per_cap,
+                     color = continent,
+                     fill = continent)) +
+  geom_violin()
 ```
 
 ### Exercise 5
 
-*Remove this text, and add your answer for Exercise 5 here.*
-
 ```{r plastic-waste-mismanaged}
-# remove this comment and add the code for Exercise 5 here
+ggplot(data = plastic_waste,
+       mapping = aes(x = mismanaged_plastic_waste_per_cap,
+                     y = plastic_waste_per_cap)) +
+  geom_point()
 ```
+_The plastic waste and mismanaged plastic waste has a positive correlation, which suggests that as plastic waste increases - mismanaged platic waste will also increase._
 
 ### Exercise 6
 
-*Remove this text, and add your answer for Exercise 6 here.*
-
 ```{r plastic-waste-mismanaged-continent}
-# remove this comment and add the code for Exercise 6 here
+ggplot(data = plastic_waste,
+       mapping = aes(x = mismanaged_plastic_waste_per_cap,
+                     y = plastic_waste_per_cap,
+                     color = continent)) +
+  geom_point()
 ```
 
 ### Exercise 7
 
-*Remove this text, and add your answer for Exercise 7 here.*
+*The two pairs of variable does not appear to be strong linearly associated.*
 
 ```{r plastic-waste-population-total}
-# remove this comment and add the code for the first plot for Exercise 7 here
+ggplot(data = plastic_waste, 
+       aes(x = plastic_waste_per_cap,
+                     y = total_pop,
+                     color = continent)) + 
+  geom_point()
 ```
 
 ```{r plastic-waste-population-coastal}
-# remove this comment and add the code for the second plot for Exercise 7 here
+ggplot(data = plastic_waste, 
+      mapping = aes(x = plastic_waste_per_cap,
+                     y = coastal_pop,
+                    color = continent)) + 
+  geom_point()
 ```
 
 ### Exercise 8
 
-*Remove this text, and add your answer for Exercise 8 here.*
+*The relationship between plastic waste per cap and coastal pop prop become weaker and eventually breaks when coastal pop prop is greater than 1.*
 
 ```{r recreate-viz}
 plastic_waste_edit <- plastic_waste %>% 
   mutate(coastal_pop_prop = coastal_pop / total_pop) %>%
   filter(plastic_waste_per_cap < 3)
-
-# remove this comment and add the code for Exercise 8 here
+  
+ggplot(data = plastic_waste_edit, 
+       mapping = aes(x = coastal_pop_prop, 
+                     y = plastic_waste_per_cap, 
+                     color = continent)) + 
+    geom_point() +
+    geom_smooth(color = "black") +
+    scale_color_viridis_d()
 ```
 
